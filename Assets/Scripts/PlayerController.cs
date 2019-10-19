@@ -3,14 +3,16 @@
 public class PlayerController : MonoBehaviour{
     
 	[Header("Movimations Settings")]
-    public float speed = 15;
+    public float speed = 2.5f;
 	public float moveHorizontal = 1f;
     public float BottonLane = -3f;
     public float MoveLaneSpeed = 0.6f;
     public float UpLane = 3f;
+    public GameObject destroyPanel;
     
     [Header("General")]
     public GameObject mainCamera;
+    public GameManager gameManager;
 
     /*##privateSettings##*/
     //directionControllers
@@ -32,11 +34,14 @@ public class PlayerController : MonoBehaviour{
         Move();
 		//update camera position to follow player
         mainCamera.transform.position = new Vector3(transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        //update destroyPanel position to follow player
+        destroyPanel.transform.position = new Vector3(transform.position.x-100f, destroyPanel.transform.position.y, destroyPanel.transform.position.z);
 	}
 
 
-    private void Move()
-    {
+    private void Move(){
+        gameManager.SpawnFloors(1);
+
        if(moveDown)
         {
             // Move to BottonLane position at MoveLaneSpeed

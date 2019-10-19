@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour{
 
     //floors
     public GameObject floorsPrefab;
-    public float maxTime = 1f;
+    public float maxTime = 0.1f;
 
     /*##privateSettings##*/
     //score
@@ -31,12 +31,6 @@ public class GameManager : MonoBehaviour{
             nextActionTime += period;
             SetCountText ();
         }
-
-        if (_timer > maxTime){
-            SpawnFloors(1);
-            _timer = 0;
-        }
-        _timer += Time.deltaTime;
     }
 
     void SetCountText (){
@@ -44,14 +38,12 @@ public class GameManager : MonoBehaviour{
         countText.text = "Score: " + score.ToString ();
     }
 
-    private void SpawnFloors(int count){
+    public void SpawnFloors(int count){
         for (int c = 0; c < count; c++){
             x += 2f;
 
             var instance = Instantiate(floorsPrefab);
             instance.transform.position = new Vector3(x, 0f, 0f);
-
-            Destroy(instance, 10f);
         }
     }
 }
