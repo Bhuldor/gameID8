@@ -14,12 +14,10 @@ public class GameManager : MonoBehaviour{
     /*##privateSettings##*/
     //score
     private float score = 0f;
-    private float timer = 0f;
     private float nextActionTime = 0.0f;
     private float period = 0.25f;
     //Spawn
     private float x = -14f;
-    private float _timer = 0;
     
     private void Start(){
         //Starts Floors
