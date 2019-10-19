@@ -9,6 +9,7 @@ TagManager:
   - Sidewalk
   - Obstacle
   - Interactable
+  - DestroyPanel
   layers:
   - Default
   - TransparentFX
