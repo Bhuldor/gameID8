@@ -72,11 +72,12 @@ public class PlayerController : MonoBehaviour{
             // Slowing speed before stoping
             if (rb.velocity.x > 0)
             {
-                movement = new Vector3(-0.5f, 0.0f, 0.0f);
+                movement = new Vector3(((speed*1.5f) * -1), 0.0f, 0.0f);
             }
             else
             {
                 rb.velocity = Vector3.zero;
+                movement = new Vector3(0.0f, 0.0f, 0.0f);
             }
             
         }
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour{
             {
                 movement = new Vector3(0.0f, 0.0f, (MoveLaneSpeed * -1));
                 rb.AddForce(movement * speed);
-                if (transform.position.z <= 0)
+                if (transform.position.z <= 1)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     isMidLane = true;
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour{
 
                 movement = new Vector3(0.0f, 0.0f, MoveLaneSpeed);
                 rb.AddForce(movement * speed);
-                if (transform.position.z >= 0)
+                if (transform.position.z >= 1)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     isMidLane = true;
