@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour{
         //move lateral 
         Move();
 		//update camera position to follow player
-        mainCamera.transform.position = new Vector3(transform.position.x+10f, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        mainCamera.transform.position = new Vector3(transform.position.x+7.5f, mainCamera.transform.position.y, mainCamera.transform.position.z);
         //update destroyPanel position to follow player
         destroyPanel.transform.position = new Vector3(transform.position.x-300f, destroyPanel.transform.position.y, destroyPanel.transform.position.z);
 
@@ -200,14 +200,10 @@ public class PlayerController : MonoBehaviour{
         blindHalfEffect.SetActive(false);
         blindFullEffect.SetActive(false);
 
-        source.PlayOneShot(gameOverSound);
-        
         //Game Over
         gameManager.GetComponent<AudioSource>().Stop();
         transform.GetComponent<AudioSource>().Stop();
         StartCoroutine(PlayGameOverSounds());
-
-        source.PlayOneShot(gameOverSound);
 
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
@@ -218,11 +214,11 @@ public class PlayerController : MonoBehaviour{
         source.volume = 1;
         source.priority = 256;
         source.PlayOneShot(gameOverSound);
+
         float pauseEndTime = Time.realtimeSinceStartup + 2.5f;
         while (Time.realtimeSinceStartup < pauseEndTime){
             yield return 0;
         }
-        source.PlayOneShot(gameOverSound);
         //source.PlayOneShot(menuButtons);
     }
 
