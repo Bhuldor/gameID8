@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour{
     [Header("General")]
     public GameObject mainCamera;
     public GameObject destroyPanel;
-    public GameObject gameOverPanel;    
+    public GameObject gameOverPanel;
+    public GameObject blindFullEffect;
+    public GameObject blindHalfEffect;
+    public GameObject blindStartEffect;
 
     [Header("Spawn Settings")]
     public GameObject spawnFloor;
@@ -169,6 +172,19 @@ public class PlayerController : MonoBehaviour{
             gameOverPanel.SetActive(true);
             Time.timeScale = 0f;
         }
+        if (collision.collider.tag == "Glasses"){
+            Destroy(collision.gameObject);
+            StartCoroutine(GettingDark(1.5f));
+        }
+    }
+
+    IEnumerator GettingDark(float delayForGettingDark){
+        yield return new WaitForSeconds(delayForGettingDark);
+        blindStartEffect.SetActive(true);
+        yield return new WaitForSeconds(delayForGettingDark);
+        blindHalfEffect.SetActive(true);
+        yield return new WaitForSeconds(delayForGettingDark);
+        blindFullEffect.SetActive(true);
     }
 
     void KeyPress()

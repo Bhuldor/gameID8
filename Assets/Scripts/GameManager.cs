@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour{
     //score
     public Text countText;
     public Text countTextFinal;
-
     //floors
     public GameObject floorsPrefab;
     public GameObject floorsFaixaPrefab;
@@ -18,7 +17,8 @@ public class GameManager : MonoBehaviour{
     public GameObject bus;
     public GameObject car;
     public GameObject cavalete;
-    public GameObject poste;
+    public GameObject trash;
+    public GameObject glasses;
 
     //player
     public GameObject player;
@@ -38,13 +38,11 @@ public class GameManager : MonoBehaviour{
     //score
     public float score = 0f;
     private float nextActionTimeBackground = 0.0f;
-    private float nextActionChangeMusic = 0.0f;
     private float nextActionTimeObstacle = 0.0f;
     private float nextActionTime = 0.0f;
     private float period = 0.25f;
     private float periodBackground = 10f;
     private float periodObstacle = 12f;
-    private float periodChangeMusic = 100f;
     //Spawn
     private float x = -22f;
     private float xBackground = 500f;
@@ -121,7 +119,7 @@ public class GameManager : MonoBehaviour{
     }
 
     private void SpawnRandomObstacle(){
-        int spawnRandom = Random.Range(0,3);
+        int spawnRandom = Random.Range(10,13);
         int spawnRandomZ = Random.Range(0,2);
         AudioClip soundEffect = perigoFrente;
         GameObject instanceObstacle = bus;
@@ -145,25 +143,47 @@ public class GameManager : MonoBehaviour{
 
         switch (spawnRandom){
             case 0:
+            case 1:
+            case 2:
                 instanceObstacle = bus;
                 yObstacle = -1.6f;
-                break;
-            case 1:
-                instanceObstacle = car;
-                break;
-            case 2:
-                instanceObstacle = cavalete;
-                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
-                yObstacle = 1f;
-                if (spawnRandomZ == 0){zObstacle = -3f;}
-                else{zObstacle = 3f;}
+                zObstacle = 0f;
                 break;
             case 3:
-                instanceObstacle = poste;
+            case 4:
+            case 5:
+                instanceObstacle = car;
+                zObstacle = 0f;
+                break;
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                instanceObstacle = cavalete;
+                xObstacle = player.transform.position.x + 35f;
                 instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
                 yObstacle = 1f;
                 if (spawnRandomZ == 0){zObstacle = -3f;}
                 else{zObstacle = 3f;}
+                break;
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                instanceObstacle = trash;
+                xObstacle = player.transform.position.x + 35f;
+                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
+                yObstacle = 1f;
+                if (spawnRandomZ == 0){zObstacle = -3f;}
+                else{zObstacle = 3f;}
+                break;
+            case 14:
+            case 15:
+            case 16:
+                instanceObstacle = glasses;
+                yObstacle = -2.6f;
+                if (spawnRandomZ == 0){zObstacle = -3.5f;}
+                else{zObstacle = 2f;}
                 break;
         }
 

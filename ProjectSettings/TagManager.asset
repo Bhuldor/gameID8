@@ -15,6 +15,7 @@ TagManager:
   - FloorRest
   - FloorStop
   - DestroyPanel
+  - Glasses
   layers:
   - Default
   - TransparentFX
