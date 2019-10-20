@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -45,7 +44,7 @@ public class MainMenu : MonoBehaviour {
     }
 
 	public void Tutorial(){
-		Debug.Log("Tutorial");
+		StartCoroutine(LetsPlay());
 	}
 
 	public void About(){
@@ -53,7 +52,6 @@ public class MainMenu : MonoBehaviour {
     }
 
 	public void ExitGame(){
-		Debug.Log("Exit");
 		Application.Quit();
 	}
 
@@ -64,7 +62,6 @@ public class MainMenu : MonoBehaviour {
         {
             gameName.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             newGame.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
-            howToPlay.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             about.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             exit.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
         }

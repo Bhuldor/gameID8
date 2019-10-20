@@ -11,6 +11,19 @@ public class PlayerController : MonoBehaviour{
     public float UpLane = 3f;
     public GameManager gameManager;
     
+    [Header("Sounds")]
+    public AudioClip gameOver;
+    public AudioClip score0;
+    public AudioClip score1;
+    public AudioClip score2;
+    public AudioClip score3;
+    public AudioClip score4;
+    public AudioClip score5;
+    public AudioClip score6;
+    public AudioClip score7;
+    public AudioClip score8;
+    public AudioClip score9;
+
     [Header("General")]
     public GameObject mainCamera;
     public GameObject destroyPanel;
@@ -37,6 +50,7 @@ public class PlayerController : MonoBehaviour{
     private float period = 15f;
     private bool slowed = false;
     private float originalSpeed;
+    private AudioSource source {get {return GetComponent<AudioSource>();}}
 
 	void Start(){
         rb = GetComponent<Rigidbody>();
@@ -59,6 +73,10 @@ public class PlayerController : MonoBehaviour{
             }
             slowed = false;
         }
+	}
+
+    public void ExitGame(){
+		Application.Quit();
 	}
 
     IEnumerator WaitTime(float time){
@@ -168,17 +186,37 @@ public class PlayerController : MonoBehaviour{
 
     void OnCollisionEnter(Collision collision){
         if (collision.collider.tag == "Obstacle"){
-            blindStartEffect.SetActive(false);
-            blindHalfEffect.SetActive(false);
-            blindFullEffect.SetActive(false);
-            //Game Over
-            gameOverPanel.SetActive(true);
-            Time.timeScale = 0f;
+            GameOver();
         }
         if (collision.collider.tag == "Glasses"){
             Destroy(collision.gameObject);
             StartCoroutine(GettingDark(1.5f));
+            gameManager.GetComponent<AudioSource>().volume = 0.2f;
         }
+    }
+
+    private void GameOver(){
+        blindStartEffect.SetActive(false);
+        blindHalfEffect.SetActive(false);
+        blindFullEffect.SetActive(false);
+
+        //Game Over
+        gameManager.GetComponent<AudioSource>().Stop();
+        transform.GetComponent<AudioSource>().Stop();
+        StartCoroutine(PlayGameOverSounds());
+
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
+        gameManager.gameOver = true;
+    }
+
+    IEnumerator PlayGameOverSounds(){
+        source.PlayOneShot(gameOver);
+        float pauseEndTime = Time.realtimeSinceStartup + 2.5f;
+        while (Time.realtimeSinceStartup < pauseEndTime){
+            yield return 0;
+        }
+        //source.PlayOneShot(menuButtons);
     }
 
     IEnumerator GettingDark(float delayForGettingDark){

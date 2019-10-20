@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour{
 
@@ -24,9 +25,14 @@ public class GameManager : MonoBehaviour{
 
     //player
     public GameObject player;
+    //Camera
+    public GameObject mainCamera;
 
     //background
     public GameObject backgroundPrefab;
+    public GameObject backgroundPrefabMiddle;
+    public GameObject backgroundPrefabFront;
+    public GameObject blindStartEffect;
 
     //audioSource
     public AudioSource audioSource;
@@ -35,6 +41,10 @@ public class GameManager : MonoBehaviour{
     public AudioClip musicSlow;
     public AudioClip perigoFrente;
     public AudioClip perigoLado;
+    public AudioClip pularIntroducao;
+    public AudioClip buttonA;
+    public AudioClip buttonS;
+    public AudioClip buttonD;
 
     /*##privateSettings##*/
     //score
@@ -56,12 +66,49 @@ public class GameManager : MonoBehaviour{
     private bool faixaPut = false;
     //general
     private int wichMusic = 0;
-    
-    private void Start(){
+    private bool initialPause = false;
+
+    public bool gameOver = false;
+    public bool tutorialOn = true;
+    public bool tutorialA = false;
+    public bool tutorialS = false;
+    public bool tutorialD = false;
+    public bool canPlayTutorialSound = false;
+
+    private void Start(){    
+        gameOver = false;
         score = 0f;
+        countText.text = "";
+
+        if (!tutorialOn){
+            blindStartEffect.SetActive(false);
+        }else{
+            blindStartEffect.SetActive(true);
+        }
         Time.timeScale = 1f;
         //Starts Floors
         SpawnFloors(35);
+    }
+    
+    IEnumerator WaitToStart(){
+        Time.timeScale = 0f;
+        PlaySound ();
+        float pauseEndTime = Time.realtimeSinceStartup + 7.5f;
+        while (Time.realtimeSinceStartup < pauseEndTime){
+            yield return 0;
+        }
+        Time.timeScale = 1;
+
+        if (tutorialOn){
+            mainCamera.GetComponent<AudioSource>().clip = pularIntroducao;
+            mainCamera.GetComponent<AudioSource>().Play();
+            mainCamera.GetComponent<AudioSource>().loop=false;
+        }
+    }
+
+    void PlaySound (){
+        mainCamera.GetComponent<AudioSource>().Play();
+        mainCamera.GetComponent<AudioSource>().loop=false;
     }
 
     public void RestartGame(){
@@ -69,21 +116,79 @@ public class GameManager : MonoBehaviour{
         SceneManager.LoadScene(currentScene.name);
     }
 
+    public void ExitGame(){
+		Application.Quit();
+	}
+
+    IEnumerator WaitToStartToPlaySound(){
+        float pauseEndTime = Time.realtimeSinceStartup + 0.5f;
+        while (Time.realtimeSinceStartup < pauseEndTime){
+            yield return 0;
+        }
+        canPlayTutorialSound = true;
+    }
+
     void Update () {
+        if (!initialPause){
+            StartCoroutine(WaitToStart()); 
+            initialPause = true;   
+        }
+
         if (Time.time > nextActionTime ) {
             nextActionTime += period;
-            SetCountText ();
+            if (!tutorialOn){
+                SetCountText ();
+            }
             SpawnFloors(1);
         }
+
 
         if (Time.time > nextActionTimeBackground ) {
             nextActionTimeBackground += periodBackground;
             SpawnBackground();
         }
 
-        if (Time.time > nextActionTimeObstacle ) {
-            nextActionTimeObstacle += periodObstacle;
-            SpawnRandomObstacle();
+        if (!tutorialOn){
+            blindStartEffect.SetActive(false);
+            if (Time.time > nextActionTimeObstacle ) {
+                nextActionTimeObstacle += periodObstacle;
+                SpawnRandomObstacle();
+            }
+        }
+
+        if (tutorialOn){
+            blindStartEffect.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Space)){
+                mainCamera.GetComponent<AudioSource>().Stop();
+                tutorialOn = false;
+            }
+            if (Input.GetKeyDown(KeyCode.A)){
+                canPlayTutorialSound = false;
+                mainCamera.GetComponent<AudioSource>().clip = buttonS;
+                mainCamera.GetComponent<AudioSource>().Play();
+                mainCamera.GetComponent<AudioSource>().loop=false;
+                tutorialA = true;
+            }
+            if (Input.GetKeyDown(KeyCode.S) && tutorialA){
+                canPlayTutorialSound = false;
+                mainCamera.GetComponent<AudioSource>().clip = buttonD;
+                mainCamera.GetComponent<AudioSource>().Play();
+                mainCamera.GetComponent<AudioSource>().loop=false;
+                tutorialS = true;
+            }
+            if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS){
+                tutorialOn = false;
+                tutorialD = true;
+            }
+        }
+
+        if (gameOver){
+            if (Input.GetKeyDown(KeyCode.W)){
+                RestartGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.D)){
+                ExitGame();
+            }
         }
     }
 
@@ -116,7 +221,11 @@ public class GameManager : MonoBehaviour{
 
     public void SpawnBackground(){
         var instanceBackground = Instantiate(backgroundPrefab);
+        var instanceBackgroundMiddle = Instantiate(backgroundPrefabMiddle);
+        var instanceBackgroundFront = Instantiate(backgroundPrefabFront);
         instanceBackground.transform.position = new Vector3(xBackground, backgroundPrefab.transform.position.y, backgroundPrefab.transform.position.z);
+        instanceBackgroundMiddle.transform.position = new Vector3(xBackground, backgroundPrefabMiddle.transform.position.y, backgroundPrefabMiddle.transform.position.z);
+        instanceBackgroundFront.transform.position = new Vector3(xBackground, backgroundPrefabFront.transform.position.y, backgroundPrefabFront.transform.position.z);
 
         xBackground += 700f;
     }
