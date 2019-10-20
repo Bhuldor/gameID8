@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour{
     public GameObject car;
     public GameObject cavalete;
     public GameObject trash;
+    public GameObject trashBig;
+    public GameObject vase;
     public GameObject glasses;
 
     //player
@@ -119,7 +121,7 @@ public class GameManager : MonoBehaviour{
     }
 
     private void SpawnRandomObstacle(){
-        int spawnRandom = Random.Range(10,13);
+        int spawnRandom = Random.Range(0,25);
         int spawnRandomZ = Random.Range(0,2);
         AudioClip soundEffect = perigoFrente;
         GameObject instanceObstacle = bus;
@@ -185,6 +187,28 @@ public class GameManager : MonoBehaviour{
                 if (spawnRandomZ == 0){zObstacle = -3.5f;}
                 else{zObstacle = 2f;}
                 break;
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+                instanceObstacle = vase;
+                xObstacle = player.transform.position.x + 35f;
+                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
+                yObstacle = 0.5f;
+                if (spawnRandomZ == 0){zObstacle = -3f;}
+                else{zObstacle = 3f;}
+                break;
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+                instanceObstacle = trashBig;
+                xObstacle = player.transform.position.x + 35f;
+                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
+                yObstacle = 0.69f;
+                if (spawnRandomZ == 0){zObstacle = -3f;}
+                else{zObstacle = 3f;}
+                break;                
         }
 
         var instance = Instantiate(instanceObstacle);
