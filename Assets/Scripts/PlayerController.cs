@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour{
     private Vector3 movement;
     private bool isUplane = true;
     private bool isMidLane = false;
+    private bool canPress = true;
     public bool moveDown = false;
     public bool moveUp = false;
     public bool dodge = false;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour{
 	}
 	
 	void Update(){
+        KeyPress();
         //move lateral 
         Move();
 		//update camera position to follow player
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour{
             {
                 moveDown = false;
                 isUplane = false;
+                canPress = true;
             }
        }
        else if(moveUp)
@@ -60,6 +63,7 @@ public class PlayerController : MonoBehaviour{
             {
                 moveUp = false;
                 isUplane = true;
+                canPress = true;
             }
         }
        else if(dodge)
@@ -107,6 +111,7 @@ public class PlayerController : MonoBehaviour{
                 {
                     dodge = false;
                     isMidLane = false;
+                    canPress = true;
                 }
             }
         }
@@ -128,8 +133,66 @@ public class PlayerController : MonoBehaviour{
                 {
                     dodge = false;
                     isMidLane = false;
+                    canPress = true;
                 }
             }
+        }
+    }
+
+    void KeyPress()
+    {
+        if (canPress && Input.GetKeyDown(KeyCode.A))
+        {
+            canPress = false;
+            spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 2, isUplane);  //DODGE
+            
+        }
+        else if (canPress && Input.GetKeyDown(KeyCode.D))
+        {
+            canPress = false;
+            if (isUplane)
+            {
+                spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 1,isUplane);  //MOVE DOWN
+            }
+            else
+            {
+                spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 0, isUplane); //MOVE UP
+            }
+        }
+        else if (canPress && Input.GetKeyDown(KeyCode.S) && !stop)
+        {
+            canPress = false;
+            spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 3, isUplane); //STOP
+        }
+        else if (stop && Input.GetKeyDown(KeyCode.S))
+        {
+            stop = false;
+            canPress = true;
+        }
+        // else if() //REST
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "FloorMoveUp")
+        {
+            moveUp = true;
+        }
+        else if(other.tag == "FloorMoveDown")
+        {
+            moveDown = true;
+        }
+        else if(other.tag == "FloorDodge")
+        {
+            dodge = true;
+        }
+        else if(other.tag == "FloorStop")
+        {
+            stop = true;
+        }
+        else if(other.tag == "FloorRest")
+        {
+
         }
     }
 }

@@ -9,6 +9,11 @@ TagManager:
   - Sidewalk
   - Obstacle
   - Interactable
+  - FloorDodge
+  - FloorMoveDown
+  - FloorMoveUp
+  - FloorRest
+  - FloorStop
   - DestroyPanel
   layers:
   - Default
