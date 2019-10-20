@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour{
     
@@ -12,6 +14,7 @@ public class PlayerController : MonoBehaviour{
     [Header("General")]
     public GameObject mainCamera;
     public GameObject destroyPanel;
+    public GameObject gameOverPanel;    
 
     [Header("Spawn Settings")]
     public GameObject spawnFloor;
@@ -27,8 +30,14 @@ public class PlayerController : MonoBehaviour{
     public bool dodge = false;
     public bool stop = false;
 	
+    private float nextActionTime = 0.0f;
+    private float period = 15f;
+    private bool slowed = false;
+    private float originalSpeed;
+
 	void Start(){
         rb = GetComponent<Rigidbody>();
+        originalSpeed = speed;
 	}
 	
 	void Update(){
@@ -36,12 +45,27 @@ public class PlayerController : MonoBehaviour{
         //move lateral 
         Move();
 		//update camera position to follow player
-        mainCamera.transform.position = new Vector3(transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        mainCamera.transform.position = new Vector3(transform.position.x+10f, mainCamera.transform.position.y, mainCamera.transform.position.z);
         //update destroyPanel position to follow player
         destroyPanel.transform.position = new Vector3(transform.position.x-300f, destroyPanel.transform.position.y, destroyPanel.transform.position.z);
+
+        //RestoreRegularSpeed
+        if (slowed){
+            if (Time.time > nextActionTime ) {
+                nextActionTime += period;
+            }
+            slowed = false;
+        }
 	}
 
-
+    IEnumerator WaitTime(float time){
+        print(Time.time);
+        yield return new WaitForSeconds(time);
+        print(Time.time);
+        
+        stop = false;
+        canPress = true;
+    }
     private void Move()
     {
        if(moveDown)
@@ -80,8 +104,8 @@ public class PlayerController : MonoBehaviour{
             else
             {
                 movement = new Vector3(0.0f, 0.0f, 0.0f);
-            }
-            
+            }            
+            StartCoroutine(WaitTime(1.5f));
         }
         else
         {
@@ -136,6 +160,14 @@ public class PlayerController : MonoBehaviour{
                     canPress = true;
                 }
             }
+        }
+    }
+
+    void OnCollisionEnter(Collision collision){
+        if (collision.collider.tag == "Obstacle"){
+            //Game Over
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 

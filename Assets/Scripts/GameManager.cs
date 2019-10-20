@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour{
 
     /*##privateSettings##*/
     //score
     public Text countText;
+    public Text countTextFinal;
 
     //floors
     public GameObject floorsPrefab;
@@ -29,17 +31,20 @@ public class GameManager : MonoBehaviour{
     public AudioClip musicFast;
     public AudioClip musicMiddle;
     public AudioClip musicSlow;
+    public AudioClip perigoFrente;
+    public AudioClip perigoLado;
 
     /*##privateSettings##*/
     //score
-    private float score = 0f;
+    public float score = 0f;
     private float nextActionTimeBackground = 0.0f;
-
+    private float nextActionChangeMusic = 0.0f;
     private float nextActionTimeObstacle = 0.0f;
     private float nextActionTime = 0.0f;
     private float period = 0.25f;
     private float periodBackground = 10f;
-    private float periodObstacle = 10f;
+    private float periodObstacle = 12f;
+    private float periodChangeMusic = 100f;
     //Spawn
     private float x = -22f;
     private float xBackground = 500f;
@@ -49,11 +54,18 @@ public class GameManager : MonoBehaviour{
     private int i;
     private int countWaitFaixa = 0;
     private bool faixaPut = false;
+    //general
+    private int wichMusic = 0;
     
     private void Start(){
-        audioSource.clip = musicSlow;
+        Time.timeScale = 1f;
         //Starts Floors
-        SpawnFloors(25);
+        SpawnFloors(35);
+    }
+
+    public void RestartGame(){
+        var currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     void Update () {
@@ -77,6 +89,28 @@ public class GameManager : MonoBehaviour{
     void SetCountText (){
         score++;
         countText.text = "Score: " + score.ToString ();
+        countTextFinal.text = "Final Score: " + score.ToString ();
+
+        //Difficult increase
+        //Music Change
+        if(score > 150){
+            if (wichMusic == 0){
+                wichMusic = 1;
+                audioSource.clip = musicMiddle;
+                audioSource.Play();
+                audioSource.loop = true;
+                periodObstacle = 6f;
+            }
+        }
+        if(score > 300){
+            if (wichMusic == 1){
+                wichMusic = 2;
+                audioSource.clip = musicFast;
+                audioSource.Play();
+                audioSource.loop = true;
+                periodObstacle = 3f;
+            }
+        }
     }
 
     public void SpawnBackground(){
@@ -87,11 +121,27 @@ public class GameManager : MonoBehaviour{
     }
 
     private void SpawnRandomObstacle(){
-        int spawnRandom = Random.Range(0,2);
-        Debug.Log("Random= " + spawnRandom);
+        int spawnRandom = Random.Range(0,3);
+        int spawnRandomZ = Random.Range(0,2);
+        AudioClip soundEffect = perigoFrente;
         GameObject instanceObstacle = bus;
-        xObstacle = player.transform.position.x + 30f;
+        xObstacle = player.transform.position.x + 50f;
+        zObstacle = 0f;
+        yObstacle = 1.2f;
 
+        if (player.transform.transform.position.z > 0){
+            if (spawnRandomZ == 1){
+                soundEffect = perigoFrente;
+            }else{
+                soundEffect = perigoLado;
+            }
+        }else{
+            if (spawnRandomZ == 0){
+                soundEffect = perigoFrente;
+            }else{
+                soundEffect = perigoLado;
+            }
+        }
 
         switch (spawnRandom){
             case 0:
@@ -100,14 +150,21 @@ public class GameManager : MonoBehaviour{
                 break;
             case 1:
                 instanceObstacle = car;
-                yObstacle = 1.2f;
                 break;
-            /*case 2:
+            case 2:
                 instanceObstacle = cavalete;
+                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
+                yObstacle = 1f;
+                if (spawnRandomZ == 0){zObstacle = -3f;}
+                else{zObstacle = 3f;}
                 break;
             case 3:
                 instanceObstacle = poste;
-                break;*/
+                instanceObstacle.GetComponent<AudioSource>().clip = soundEffect;
+                yObstacle = 1f;
+                if (spawnRandomZ == 0){zObstacle = -3f;}
+                else{zObstacle = 3f;}
+                break;
         }
 
         var instance = Instantiate(instanceObstacle);

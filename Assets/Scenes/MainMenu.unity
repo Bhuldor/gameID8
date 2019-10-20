@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 433584457}
   - component: {fileID: 433584456}
   - component: {fileID: 433584455}
+  - component: {fileID: 433584458}
   m_Layer: 5
   m_Name: ButtonExit
   m_TagString: Untagged
@@ -326,6 +327,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433584453}
   m_CullTransparentMesh: 0
+--- !u!114 &433584458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433584453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86392f42dc1d30a4baa927fd43a431fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 3301dcb397389574d82eaabd05e0967f, type: 3}
 --- !u!1 &547870928
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +352,7 @@ GameObject:
   - component: {fileID: 547870932}
   - component: {fileID: 547870931}
   - component: {fileID: 547870930}
+  - component: {fileID: 547870933}
   m_Layer: 5
   m_Name: ButtonNewGame
   m_TagString: Untagged
@@ -455,6 +470,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547870928}
   m_CullTransparentMesh: 0
+--- !u!114 &547870933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547870928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86392f42dc1d30a4baa927fd43a431fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 3301dcb397389574d82eaabd05e0967f, type: 3}
 --- !u!1 &565541344
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,6 +667,7 @@ GameObject:
   - component: {fileID: 723805779}
   - component: {fileID: 723805778}
   - component: {fileID: 723805777}
+  - component: {fileID: 723805780}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -711,6 +740,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &723805780
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723805776}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1e2977391d5c3ba47a2f924c7dbca32b, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1006669015
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97c182d057650b4e93a16ad012728f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayForDark: 3
+  delayForGettingDark: 2
+  timeToFullBlack: 6
   gameName: {fileID: 174929663}
   newGame: {fileID: 1949684396}
   howToPlay: {fileID: 2103138967}
@@ -950,6 +1076,7 @@ GameObject:
   - component: {fileID: 1348245019}
   - component: {fileID: 1348245018}
   - component: {fileID: 1348245017}
+  - component: {fileID: 1348245020}
   m_Layer: 5
   m_Name: ButtonHowToPlay
   m_TagString: Untagged
@@ -1067,6 +1194,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348245015}
   m_CullTransparentMesh: 0
+--- !u!114 &1348245020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348245015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86392f42dc1d30a4baa927fd43a431fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 3301dcb397389574d82eaabd05e0967f, type: 3}
 --- !u!1 &1753851550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,6 +1387,7 @@ GameObject:
   - component: {fileID: 1914099618}
   - component: {fileID: 1914099617}
   - component: {fileID: 1914099616}
+  - component: {fileID: 1914099619}
   m_Layer: 5
   m_Name: ButtonAbout
   m_TagString: Untagged
@@ -1364,6 +1505,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914099614}
   m_CullTransparentMesh: 0
+--- !u!114 &1914099619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914099614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86392f42dc1d30a4baa927fd43a431fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 3301dcb397389574d82eaabd05e0967f, type: 3}
 --- !u!1 &1927453416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,7 +1726,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tutorial
+  m_Text: Como Jogar
 --- !u!222 &2103138970
 CanvasRenderer:
   m_ObjectHideFlags: 0
