@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour{
             if (!isMidLane) // position is start position
             {
                 movement = new Vector3(1.0f, 0.0f, (MoveLaneSpeed * -1));
-                if (transform.position.z <= 1)
+                if (transform.position.z <= 0)
                 {
                     isMidLane = true;
                 }
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour{
             {
 
                 movement = new Vector3(1.0f, 0.0f, MoveLaneSpeed);
-                if (transform.position.z >= 1)
+                if (transform.position.z >= 0)
                 {
                     isMidLane = true;
                 }

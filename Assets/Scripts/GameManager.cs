@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour{
     public void SpawnFloors(int count){
         i = Random.Range(0,10);
         GameObject instanceObject = floorsPrefab;
-        Debug.Log(i);
 
         for (int c = 0; c < count; c++){
             x += 2f;
