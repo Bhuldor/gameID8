@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BackgroundController : MonoBehaviour{
+public class MovimentController : MonoBehaviour{
     
     public float speed = 2f;
     private Rigidbody rb;
