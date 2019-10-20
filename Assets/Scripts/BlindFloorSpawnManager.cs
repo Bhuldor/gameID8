@@ -9,20 +9,19 @@ public class BlindFloorSpawnManager : MonoBehaviour
 
     [Header("Configuration")]
     public float InstanceDistance = 6f;
+    public float yPosition = -1.05f;
 
 
     public void SpawnFloor(GameObject player, int ID_Floor, bool isTop)
     {
-        
-
         if (ID_Floor == 0) // MoveUp
         {
-            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.10f, -1.8f);
+            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, -2.65f);
             Instantiate(floorMoveUp, floorPosition, player.transform.rotation);
         }
         else if (ID_Floor == 1) // MoveDown
         {
-            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.10f, -2.91f);
+            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, -2.92f);
             Instantiate(floorMoveDown, floorPosition, player.transform.rotation);
         }
         else if(ID_Floor == 2) // Dodge
@@ -30,11 +29,11 @@ public class BlindFloorSpawnManager : MonoBehaviour
             Vector3 floorPosition = player.transform.position;
             if (isTop)
             {
-                floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.10f, -2.91f);
+                floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, -2.9f);
             }
             else
             {
-                floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.10f, -1.8f);
+                floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, -2.7f);
             }
             
             Instantiate(floorDodge, floorPosition, player.transform.rotation);
@@ -44,18 +43,18 @@ public class BlindFloorSpawnManager : MonoBehaviour
             Vector3 floorPosition = player.transform.position;
             if (isTop)
             {
-                floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.13f, 0.0f);
+                floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, -0.175f);
             }
             else
             {
-                floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.13f, 1.0f);
+                floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, 0.05f);
             }
             
             Instantiate(floorStop, floorPosition, player.transform.rotation);
         }
         else // Rest
         {
-            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, -1.13f, 0.0f);
+            Vector3 floorPosition = player.transform.position + new Vector3(InstanceDistance, yPosition, 0.0f);
             Instantiate(floorRest, floorPosition, player.transform.rotation);
         }
         
