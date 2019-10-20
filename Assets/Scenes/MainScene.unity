@@ -360,7 +360,7 @@ MonoBehaviour:
     type: 3}
   floorRest: {fileID: 374416542379143339, guid: b0a1d6b27993f90438810109ea2ec20b,
     type: 3}
-  InstanceDistance: 6
+  InstanceDistance: 2
   yPosition: -1.05
 --- !u!4 &432485591
 Transform:

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour{
 
     /*##privateSettings##*/
     //score
-    public Text countText;
+    public Text countText ;
     public Text countTextFinal;
     //floors
     public GameObject floorsPrefab;
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour{
     private int wichMusic = 0;
     
     private void Start(){
+        score = 0f;
         Time.timeScale = 1f;
         //Starts Floors
         SpawnFloors(35);

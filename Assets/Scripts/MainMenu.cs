@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
-    public float delayForGettingDark = 2;
-    public float timeToFullBlack = 6f;
+	public GameObject mainCamera;
+	public AudioClip letsPlay;
+    public float delayForGettingDark = 0.25f;
+    public float timeToFullBlack = 2f;
     public GameObject gameName, newGame, howToPlay, about, exit;
+	private AudioSource source {get {return GetComponent<AudioSource>();}}
 
     private void Start(){
         StartCoroutine(GettingDark());
@@ -34,8 +37,11 @@ public class MainMenu : MonoBehaviour {
         }
     }
     public void PlayGame(){
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
+		mainCamera.GetComponent<AudioSource>().Stop();
+		StartCoroutine(LetsPlay());
+    }
+	void PlaySound (){
+        source.PlayOneShot(letsPlay);
     }
 
 	public void Tutorial(){
@@ -62,6 +68,12 @@ public class MainMenu : MonoBehaviour {
             about.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             exit.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
         }
+    }
+
+	IEnumerator LetsPlay(){
+		PlaySound ();
+        yield return new WaitForSeconds(3f);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);   
     }
 
     public void BackToMainMenu()
