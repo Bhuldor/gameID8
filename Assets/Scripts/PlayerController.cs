@@ -168,6 +168,9 @@ public class PlayerController : MonoBehaviour{
 
     void OnCollisionEnter(Collision collision){
         if (collision.collider.tag == "Obstacle"){
+            blindStartEffect.SetActive(false);
+            blindHalfEffect.SetActive(false);
+            blindFullEffect.SetActive(false);
             //Game Over
             gameOverPanel.SetActive(true);
             Time.timeScale = 0f;
