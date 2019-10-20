@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour{
 
     //floors
     public GameObject floorsPrefab;
+    public GameObject floorsFaixaPrefab;
     public float maxTime = 0.1f;
 
     //background
@@ -22,12 +23,15 @@ public class GameManager : MonoBehaviour{
     private float period = 0.25f;
     private float periodBackground = 10f;
     //Spawn
-    private float x = -14f;
+    private float x = -22f;
     private float xBackground = 500f;
+    private int i;
+    private int countWaitFaixa = 0;
+    private bool faixaPut = false;
     
     private void Start(){
         //Starts Floors
-        SpawnFloors(20);
+        SpawnFloors(25);
     }
 
     void Update () {
@@ -56,10 +60,29 @@ public class GameManager : MonoBehaviour{
     }
 
     public void SpawnFloors(int count){
+        i = Random.Range(0,10);
+        GameObject instanceObject = floorsPrefab;
+        Debug.Log(i);
+
         for (int c = 0; c < count; c++){
             x += 2f;
 
-            var instance = Instantiate(floorsPrefab);
+            if (i < 2 && !faixaPut){
+                instanceObject = floorsFaixaPrefab;
+                faixaPut = true;
+            }else{
+                instanceObject = floorsPrefab;
+            }
+
+            if (faixaPut){
+                countWaitFaixa++;
+
+                if (countWaitFaixa > 100){
+                    faixaPut = false;
+                }
+            }
+
+            var instance = Instantiate(instanceObject);
             instance.transform.position = new Vector3(x, 0f, 0f);
         }
     }
