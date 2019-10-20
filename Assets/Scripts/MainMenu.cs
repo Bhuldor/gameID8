@@ -35,15 +35,16 @@ public class MainMenu : MonoBehaviour {
     }
     public void PlayGame(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-	}
+        
+    }
 
 	public void Tutorial(){
 		Debug.Log("Tutorial");
 	}
 
 	public void About(){
-		Debug.Log("About");
-	}
+        SceneManager.LoadScene("MainMenuAbout");
+    }
 
 	public void ExitGame(){
 		Debug.Log("Exit");
@@ -53,10 +54,18 @@ public class MainMenu : MonoBehaviour {
     IEnumerator GettingDark()
     {
         yield return new WaitForSeconds(delayForGettingDark);
-        gameName.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
-        newGame.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
-        howToPlay.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
-        about.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
-        exit.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+        if (gameName != null)
+        {
+            gameName.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+            newGame.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+            howToPlay.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+            about.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+            exit.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+        }
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
