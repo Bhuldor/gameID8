@@ -3,17 +3,18 @@
 public class PlayerController : MonoBehaviour{
     
 	[Header("Movimations Settings")]
-    public float speed = 2.5f;
-	public float moveHorizontal = 1f;
-    public float BottonLane = -3f;
+    public float speed = 5;
+	public float BottonLane = -3f;
     public float MoveLaneSpeed = 0.6f;
     public float UpLane = 3f;
     public GameObject destroyPanel;
+    public GameManager gameManager;
     
     [Header("General")]
     public GameObject mainCamera;
-    public GameManager gameManager;
 
+    [Header("Spawn Settings")]
+    public GameObject spawnFloor;
     /*##privateSettings##*/
     //directionControllers
     private Rigidbody rb;
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour{
         rb = GetComponent<Rigidbody>();
 	}
 	
-	void FixedUpdate(){
+	void Update(){
         //move lateral 
         Move();
 		//update camera position to follow player
@@ -39,18 +40,14 @@ public class PlayerController : MonoBehaviour{
 	}
 
 
-    private void Move(){
-        gameManager.SpawnFloors(1);
-
+    private void Move()
+    {
        if(moveDown)
         {
             // Move to BottonLane position at MoveLaneSpeed
-            movement = new Vector3(0.0f, 0.0f, (MoveLaneSpeed * -1));
-            rb.AddForce(movement * speed);
+            movement = new Vector3(1.0f, 0.0f, (MoveLaneSpeed * -1));
             if(transform.position.z <= BottonLane )
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
-                rb.angularVelocity = Vector3.zero;
                 moveDown = false;
                 isUplane = false;
             }
@@ -58,12 +55,9 @@ public class PlayerController : MonoBehaviour{
        else if(moveUp)
         {
             // Move to UpLane position at MoveLaneSpeed
-            movement = new Vector3(0.0f, 0.0f, MoveLaneSpeed);
-            rb.AddForce(movement * speed);
+            movement = new Vector3(1.0f, 0.0f, MoveLaneSpeed);
             if (transform.position.z >= UpLane)
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
-                rb.angularVelocity = Vector3.zero;
                 moveUp = false;
                 isUplane = true;
             }
@@ -72,25 +66,24 @@ public class PlayerController : MonoBehaviour{
         {
             Dodge();
         }
-       if(stop)
+       else if(stop)
         {
             // Slowing speed before stoping
             if (rb.velocity.x > 0)
             {
-                movement = new Vector3(((speed*1.5f) * -1), 0.0f, 0.0f);
+                movement = new Vector3(((speed / 2) * -1), 0.0f, 0.0f);
             }
             else
             {
-                rb.velocity = Vector3.zero;
                 movement = new Vector3(0.0f, 0.0f, 0.0f);
             }
             
         }
         else
         {
-            movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
+            movement = new Vector3(1f, 0.0f, 0.0f);
         }
-       rb.AddForce(movement * speed);
+        transform.Translate(movement * speed * Time.deltaTime);
     }
 
     void Dodge()
@@ -101,21 +94,17 @@ public class PlayerController : MonoBehaviour{
         {
             if (!isMidLane) // position is start position
             {
-                movement = new Vector3(0.0f, 0.0f, (MoveLaneSpeed * -1));
-                rb.AddForce(movement * speed);
+                movement = new Vector3(1.0f, 0.0f, (MoveLaneSpeed * -1));
                 if (transform.position.z <= 1)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     isMidLane = true;
                 }
             }
             else // position is MidLane
             {
-                movement = new Vector3(0.0f, 0.0f, MoveLaneSpeed);
-                rb.AddForce(movement * speed);
+                movement = new Vector3(1.0f, 0.0f, MoveLaneSpeed);
                 if (transform.position.z >= UpLane)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     dodge = false;
                     isMidLane = false;
                 }
@@ -126,21 +115,17 @@ public class PlayerController : MonoBehaviour{
             if (!isMidLane) // position is start position
             {
 
-                movement = new Vector3(0.0f, 0.0f, MoveLaneSpeed);
-                rb.AddForce(movement * speed);
+                movement = new Vector3(1.0f, 0.0f, MoveLaneSpeed);
                 if (transform.position.z >= 1)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     isMidLane = true;
                 }
             }
             else // position is MidLane
             {
-                movement = new Vector3(0.0f, 0.0f, (MoveLaneSpeed * -1));
-                rb.AddForce(movement * speed);
+                movement = new Vector3(1.0f, 0.0f, (MoveLaneSpeed * -1));
                 if (transform.position.z <= BottonLane)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x, 0.0f, 0.0f);
                     dodge = false;
                     isMidLane = false;
                 }

@@ -378,13 +378,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  moveHorizontal: 1
   BottonLane: -2
-  MoveLaneSpeed: 0.6
+  MoveLaneSpeed: 1
   UpLane: 2
   destroyPanel: {fileID: 1683409616}
-  mainCamera: {fileID: 963194225}
   gameManager: {fileID: 1786091117}
+  mainCamera: {fileID: 963194225}
+  spawnFloor: {fileID: 0}
   moveDown: 0
   moveUp: 0
   dodge: 0
@@ -797,13 +797,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.08220395, y: -0, z: -0, w: 0.9966155}
-  m_LocalPosition: {x: -18.5, y: 6.72, z: -10}
+  m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
+  m_LocalPosition: {x: -18.5, y: 8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 9.431001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22, y: 0, z: 0}
 --- !u!1 &1065350195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1048,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!1 &1712004455
 GameObject:
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   countText: {fileID: 787366185}
   floorsPrefab: {fileID: 1289048647543099130, guid: 9377015a84371964089d1b7874a80507,
     type: 3}
-  maxTime: 0.1
+  maxTime: 0.5
 --- !u!4 &1786091118
 Transform:
   m_ObjectHideFlags: 0

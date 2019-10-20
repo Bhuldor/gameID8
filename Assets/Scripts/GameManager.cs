@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour{
         if (Time.time > nextActionTime ) {
             nextActionTime += period;
             SetCountText ();
+            SpawnFloors(1);
         }
     }
 
