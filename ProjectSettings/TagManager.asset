@@ -14,6 +14,7 @@ TagManager:
   - FloorMoveUp
   - FloorRest
   - FloorStop
+  - DestroyPanel
   layers:
   - Default
   - TransparentFX

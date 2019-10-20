@@ -7,9 +7,11 @@ public class PlayerController : MonoBehaviour{
 	public float BottonLane = -3f;
     public float MoveLaneSpeed = 0.6f;
     public float UpLane = 3f;
+    public GameManager gameManager;
     
     [Header("General")]
     public GameObject mainCamera;
+    public GameObject destroyPanel;
 
     [Header("Spawn Settings")]
     public GameObject spawnFloor;
@@ -31,9 +33,12 @@ public class PlayerController : MonoBehaviour{
 	
 	void Update(){
         KeyPress();
+        //move lateral 
         Move();
 		//update camera position to follow player
         mainCamera.transform.position = new Vector3(transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        //update destroyPanel position to follow player
+        destroyPanel.transform.position = new Vector3(transform.position.x-300f, destroyPanel.transform.position.y, destroyPanel.transform.position.z);
 	}
 
 
