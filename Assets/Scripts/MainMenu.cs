@@ -17,11 +17,11 @@ public class MainMenu : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             PlayGame();
         }
-        else if (Input.GetKeyDown(KeyCode.T))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             Tutorial();
         }
@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour {
         {
             About();
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             ExitGame();
         }
