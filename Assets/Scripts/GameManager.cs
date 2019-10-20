@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour{
             if (faixaPut){
                 countWaitFaixa++;
 
-                if (countWaitFaixa > 100){
+                if (countWaitFaixa > 200){
                     faixaPut = false;
                 }
             }
