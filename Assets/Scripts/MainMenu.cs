@@ -10,11 +10,10 @@ public class MainMenu : MonoBehaviour {
     public float timeToFullBlack = 6f;
     public GameObject gameName, newGame, howToPlay, about, exit;
 
-    private void Start()
-    {
+    private void Start(){
         StartCoroutine(GettingDark());
     }
-
+	
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
