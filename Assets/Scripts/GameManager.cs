@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour{
     //background
     public GameObject backgroundPrefab;
 
+    //audioSource
+    public AudioSource audioSource;
+    public AudioClip musicFast;
+    public AudioClip musicMiddle;
+    public AudioClip musicSlow;
+
     /*##privateSettings##*/
     //score
     private float score = 0f;
@@ -30,6 +36,7 @@ public class GameManager : MonoBehaviour{
     private bool faixaPut = false;
     
     private void Start(){
+        audioSource.clip = musicSlow;
         //Starts Floors
         SpawnFloors(25);
     }
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour{
             if (faixaPut){
                 countWaitFaixa++;
 
-                if (countWaitFaixa > 200){
+                if (countWaitFaixa > 125){
                     faixaPut = false;
                 }
             }
