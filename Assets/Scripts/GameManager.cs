@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour{
     public GameObject player;
     //Camera
     public GameObject mainCamera;
+    public GameObject tutorialSound;
 
     //background
     public GameObject backgroundPrefab;
@@ -164,16 +165,16 @@ public class GameManager : MonoBehaviour{
             }
             if (Input.GetKeyDown(KeyCode.A)){
                 canPlayTutorialSound = false;
-                mainCamera.GetComponent<AudioSource>().clip = buttonS;
-                mainCamera.GetComponent<AudioSource>().Play();
-                mainCamera.GetComponent<AudioSource>().loop=false;
+                tutorialSound.GetComponent<AudioSource>().clip = buttonS;
+                tutorialSound.GetComponent<AudioSource>().Play();
+                tutorialSound.GetComponent<AudioSource>().loop=false;
                 tutorialA = true;
             }
             if (Input.GetKeyDown(KeyCode.S) && tutorialA){
                 canPlayTutorialSound = false;
-                mainCamera.GetComponent<AudioSource>().clip = buttonD;
-                mainCamera.GetComponent<AudioSource>().Play();
-                mainCamera.GetComponent<AudioSource>().loop=false;
+                tutorialSound.GetComponent<AudioSource>().clip = buttonD;
+                tutorialSound.GetComponent<AudioSource>().Play();
+                tutorialSound.GetComponent<AudioSource>().loop=false;
                 tutorialS = true;
             }
             if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS){

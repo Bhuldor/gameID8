@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour{
     public GameManager gameManager;
     
     [Header("Sounds")]
-    public AudioClip gameOver;
+    public AudioClip gameOverSound;
     public AudioClip score0;
     public AudioClip score1;
     public AudioClip score2;
@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour{
         if (collision.collider.tag == "Glasses"){
             Destroy(collision.gameObject);
             StartCoroutine(GettingDark(1.5f));
-            gameManager.GetComponent<AudioSource>().volume = 0.2f;
+            gameManager.GetComponent<AudioSource>().volume = 0.12f;
         }
     }
 
@@ -200,10 +200,14 @@ public class PlayerController : MonoBehaviour{
         blindHalfEffect.SetActive(false);
         blindFullEffect.SetActive(false);
 
+        source.PlayOneShot(gameOverSound);
+        
         //Game Over
         gameManager.GetComponent<AudioSource>().Stop();
         transform.GetComponent<AudioSource>().Stop();
         StartCoroutine(PlayGameOverSounds());
+
+        source.PlayOneShot(gameOverSound);
 
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
@@ -211,11 +215,14 @@ public class PlayerController : MonoBehaviour{
     }
 
     IEnumerator PlayGameOverSounds(){
-        source.PlayOneShot(gameOver);
+        source.volume = 1;
+        source.priority = 256;
+        source.PlayOneShot(gameOverSound);
         float pauseEndTime = Time.realtimeSinceStartup + 2.5f;
         while (Time.realtimeSinceStartup < pauseEndTime){
             yield return 0;
         }
+        source.PlayOneShot(gameOverSound);
         //source.PlayOneShot(menuButtons);
     }
 
