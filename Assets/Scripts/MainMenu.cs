@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour {
     }
 
 	public void Tutorial(){
-		StartCoroutine(LetsPlay());
+        SceneManager.LoadScene(3); 
 	}
 
 	public void About(){
@@ -62,6 +62,7 @@ public class MainMenu : MonoBehaviour {
         {
             gameName.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             newGame.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
+            howToPlay.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             about.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
             exit.GetComponent<Text>().CrossFadeColor(Color.black, timeToFullBlack, true, false);
         }
