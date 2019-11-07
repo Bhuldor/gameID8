@@ -50,12 +50,16 @@ public class PlayerController : MonoBehaviour{
     private float period = 15f;
     private bool slowed = false;
     private float originalSpeed;
+
+    private BlindFloorSpawnManager bfSpawnManager;
+    
     private AudioSource source {get {return GetComponent<AudioSource>();}}
 
 	void Start(){
         rb = GetComponent<Rigidbody>();
         originalSpeed = speed;
-	}
+        bfSpawnManager = spawnFloor.GetComponent<BlindFloorSpawnManager>();
+    }
 	
 	void Update(){
         KeyPress();
@@ -80,11 +84,9 @@ public class PlayerController : MonoBehaviour{
 	}
 
     IEnumerator WaitTime(float time){
-        print(Time.time);
         yield return new WaitForSeconds(time);
-        print(Time.time);
-        
         stop = false;
+        yield return new WaitForSeconds(0.5f);
         canPress = true;
     }
     private void Move()
@@ -125,8 +127,8 @@ public class PlayerController : MonoBehaviour{
             else
             {
                 movement = new Vector3(0.0f, 0.0f, 0.0f);
-            }            
-            StartCoroutine(WaitTime(1.5f));
+            }
+            
         }
         else
         {
@@ -236,7 +238,7 @@ public class PlayerController : MonoBehaviour{
         if (canPress && Input.GetKeyDown(KeyCode.A))
         {
             canPress = false;
-            spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 2, isUplane);  //DODGE
+            bfSpawnManager.SpawnFloor(this.gameObject, 2, isUplane);  //DODGE
             
         }
         else if (canPress && Input.GetKeyDown(KeyCode.D))
@@ -244,23 +246,19 @@ public class PlayerController : MonoBehaviour{
             canPress = false;
             if (isUplane)
             {
-                spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 1,isUplane);  //MOVE DOWN
+                bfSpawnManager.SpawnFloor(this.gameObject, 1,isUplane);  //MOVE DOWN
             }
             else
             {
-                spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 0, isUplane); //MOVE UP
+                bfSpawnManager.SpawnFloor(this.gameObject, 0, isUplane); //MOVE UP
             }
         }
         else if (canPress && Input.GetKeyDown(KeyCode.S) && !stop)
         {
             canPress = false;
-            spawnFloor.GetComponent<BlindFloorSpawnManager>().SpawnFloor(this.gameObject, 3, isUplane); //STOP
+            bfSpawnManager.SpawnFloor(this.gameObject, 3, isUplane); //STOP
         }
-        else if (stop && Input.GetKeyDown(KeyCode.S))
-        {
-            stop = false;
-            canPress = true;
-        }
+        
         // else if() //REST
     }
 
@@ -281,6 +279,8 @@ public class PlayerController : MonoBehaviour{
         else if(other.tag == "FloorStop")
         {
             stop = true;
+            other.gameObject.GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine(WaitTime(1.5f));
         }
         else if(other.tag == "FloorRest")
         {
