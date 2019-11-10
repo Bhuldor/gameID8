@@ -76,8 +76,17 @@ public class GameManager : MonoBehaviour{
     public bool tutorialD = false;
     public bool canPlayTutorialSound = false;
 
+
+    //pause
+
+    private bool startGame = true;
+    private bool gameIsPaused = false;
+    public GameObject pausePanel;
+
+
     private void Start(){    
         gameOver = false;
+        startGame = true;
         score = 0f;
         countText.text = "";
 
@@ -92,13 +101,19 @@ public class GameManager : MonoBehaviour{
     }
     
     IEnumerator WaitToStart(){
-        Time.timeScale = 0f;
-        PlaySound ();
-        float pauseEndTime = Time.realtimeSinceStartup + 7.5f;
-        while (Time.realtimeSinceStartup < pauseEndTime){
-            yield return 0;
+        if (startGame)
+        {
+            Time.timeScale = 0f;
+            PlaySound();
+            float pauseEndTime = Time.realtimeSinceStartup + 7.5f;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            Time.timeScale = 1;
+            startGame = false;
         }
-        Time.timeScale = 1;
+        
 
         if (tutorialOn){
             mainCamera.GetComponent<AudioSource>().clip = pularIntroducao;
@@ -191,6 +206,8 @@ public class GameManager : MonoBehaviour{
                 ExitGame();
             }
         }
+
+        PauseGame();
     }
 
     void SetCountText (){
@@ -351,5 +368,25 @@ public class GameManager : MonoBehaviour{
             var instance = Instantiate(instanceObject);
             instance.transform.position = new Vector3(x, 0f, 0f);
         }
+    }
+
+    public void PauseGame() {
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameIsPaused && !gameOver && !tutorialOn)
+        {
+            gameIsPaused = true;
+            pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && gameIsPaused)
+        {
+            UnpauseGame();
+        }
+    }
+
+    public void UnpauseGame()
+    {
+        gameIsPaused = false;
+        pausePanel.SetActive(false);
+        Time.timeScale = 1;
     }
 }
