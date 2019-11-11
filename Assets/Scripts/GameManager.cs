@@ -83,10 +83,27 @@ public class GameManager : MonoBehaviour{
     private bool gameIsPaused = false;
     public GameObject pausePanel;
 
+    //Tutorial Visual
+
+    private bool StartingTutorial;
+    public GameObject TutorialPanel;
+    public Text text_Tutorial;
+    public RawImage img_barra;
+    public GameObject PressioneAPanel;
+    public Text text_A;
+    public RawImage img_A;
+    public GameObject PreesioneSPanel;
+    public Text text_S;
+    public RawImage img_S;
+    public GameObject PreesioneDPanel;
+    public RawImage img_D;
+    public Text text_D;
+
 
     private void Start(){    
         gameOver = false;
         startGame = true;
+        StartingTutorial = true;
         score = 0f;
         countText.text = "";
 
@@ -171,31 +188,9 @@ public class GameManager : MonoBehaviour{
                 SpawnRandomObstacle();
             }
         }
-
-        if (tutorialOn){
-            blindStartEffect.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.Space)){
-                mainCamera.GetComponent<AudioSource>().Stop();
-                tutorialOn = false;
-            }
-            if (Input.GetKeyDown(KeyCode.A)){
-                canPlayTutorialSound = false;
-                tutorialSound.GetComponent<AudioSource>().clip = buttonS;
-                tutorialSound.GetComponent<AudioSource>().Play();
-                tutorialSound.GetComponent<AudioSource>().loop=false;
-                tutorialA = true;
-            }
-            if (Input.GetKeyDown(KeyCode.S) && tutorialA){
-                canPlayTutorialSound = false;
-                tutorialSound.GetComponent<AudioSource>().clip = buttonD;
-                tutorialSound.GetComponent<AudioSource>().Play();
-                tutorialSound.GetComponent<AudioSource>().loop=false;
-                tutorialS = true;
-            }
-            if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS){
-                tutorialOn = false;
-                tutorialD = true;
-            }
+        else if (tutorialOn)
+        {
+            Tutorial();
         }
 
         if (gameOver){
@@ -208,6 +203,95 @@ public class GameManager : MonoBehaviour{
         }
 
         PauseGame();
+    }
+
+    void Tutorial()
+    {
+        blindStartEffect.SetActive(true);
+        if (StartingTutorial)
+        {
+            ActivateSlowly(TutorialPanel, text_Tutorial, img_barra);
+            StartCoroutine(WaitToShowPanel());
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            mainCamera.GetComponent<AudioSource>().Stop();
+            tutorialOn = false;
+            DesactivateSlowly(TutorialPanel, text_Tutorial, img_barra);
+            DesactivateSlowly(PressioneAPanel, text_A, img_A);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            canPlayTutorialSound = false;
+            tutorialSound.GetComponent<AudioSource>().clip = buttonS;
+            tutorialSound.GetComponent<AudioSource>().Play();
+            tutorialSound.GetComponent<AudioSource>().loop = false;
+            tutorialA = true;
+            DesactivateSlowly(PressioneAPanel, text_A, img_A);
+            ActivateSlowly(PreesioneSPanel, text_S, img_S);
+        }
+        if (Input.GetKeyDown(KeyCode.S) && tutorialA)
+        {
+            canPlayTutorialSound = false;
+            tutorialSound.GetComponent<AudioSource>().clip = buttonD;
+            tutorialSound.GetComponent<AudioSource>().Play();
+            tutorialSound.GetComponent<AudioSource>().loop = false;
+            tutorialS = true;
+            DesactivateSlowly(PreesioneSPanel, text_S, img_S);
+            ActivateSlowly(PreesioneDPanel, text_D, img_D);
+        }
+        if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS)
+        {
+            tutorialOn = false;
+            tutorialD = true;
+            DesactivateSlowly(PreesioneDPanel, text_D, img_D);
+            DesactivateSlowly(TutorialPanel, text_Tutorial, img_barra);
+            StartCoroutine(WaitAndDestroy());
+        }
+    }
+
+    IEnumerator WaitAndDestroy()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(TutorialPanel);
+        Destroy(PressioneAPanel);
+        Destroy(PreesioneDPanel);
+        Destroy(PreesioneSPanel);
+    }
+    IEnumerator WaitToShowPanel()
+    {
+        while (StartingTutorial)
+        {
+            yield return new WaitForSeconds(3f);
+            if (tutorialOn && !tutorialA)
+            {
+                ActivateSlowly(PressioneAPanel, text_A, img_A);
+                StartingTutorial = false;
+            }
+        }
+    }
+
+    void ActivateSlowly(GameObject obj, Text txt, RawImage rawimg)
+    {
+        Image img = obj.GetComponent<Image>();
+        float rawimg_alpha = rawimg.color.a;
+        float img_alpha = img.color.a;
+        float txt_alpha = txt.color.a;
+        img.CrossFadeAlpha(0.0f, 0.0f, true);
+        txt.CrossFadeAlpha(0.0f, 0.0f, true);
+        rawimg.CrossFadeAlpha(0.0f, 0.0f, true);
+        obj.SetActive(true);
+        rawimg.CrossFadeAlpha(rawimg_alpha, 0.5f, false);
+        img.CrossFadeAlpha(img_alpha, 0.5f, false);
+        txt.CrossFadeAlpha(txt_alpha, 0.5f, false);
+    }
+
+    void DesactivateSlowly(GameObject obj, Text txt, RawImage rawimg)
+    {
+        Image img = obj.GetComponent<Image>();
+        rawimg.CrossFadeAlpha(0.0f, 0.5f, false);
+        img.CrossFadeAlpha(0.0f, 0.5f, false);
+        txt.CrossFadeAlpha(0.0f, 0.5f, false);
     }
 
     void SetCountText (){
@@ -226,7 +310,7 @@ public class GameManager : MonoBehaviour{
                 periodObstacle = 6f;
             }
         }
-        if(score > 300){
+        else if(score > 300){
             if (wichMusic == 1){
                 wichMusic = 2;
                 audioSource.clip = musicFast;
