@@ -465,6 +465,10 @@ public class GameManager : MonoBehaviour{
         {
             UnpauseGame();
         }
+        if(gameIsPaused && Input.GetKeyDown(KeyCode.Q))
+        {
+            ExitGame();
+        }
     }
 
     public void UnpauseGame()
