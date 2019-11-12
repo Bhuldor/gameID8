@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour{
     private float originalSpeed;
 
     private BlindFloorSpawnManager bfSpawnManager;
+
+    //private GameManager gameManager;
     
     private AudioSource source {get {return GetComponent<AudioSource>();}}
 
@@ -237,12 +239,20 @@ public class PlayerController : MonoBehaviour{
     {
         if (canPress && Input.GetKeyDown(KeyCode.A))
         {
+            if(gameManager.tutorialOn && gameManager.tutorialA)
+            {
+                return;
+            }
             canPress = false;
             bfSpawnManager.SpawnFloor(this.gameObject, 2, isUplane);  //DODGE
             
         }
         else if (canPress && Input.GetKeyDown(KeyCode.D))
         {
+            if (gameManager.tutorialOn && !gameManager.tutorialS)
+            {
+                return;
+            }
             canPress = false;
             if (isUplane)
             {
@@ -255,6 +265,10 @@ public class PlayerController : MonoBehaviour{
         }
         else if (canPress && Input.GetKeyDown(KeyCode.S) && !stop)
         {
+            if(gameManager.tutorialOn && (!gameManager.tutorialA || gameManager.tutorialS))
+            {
+                return;
+            }
             canPress = false;
             bfSpawnManager.SpawnFloor(this.gameObject, 3, isUplane); //STOP
         }
