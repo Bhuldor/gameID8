@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour{
             DesactivateSlowly(TutorialPanel, text_Tutorial, img_barra);
             DesactivateSlowly(PressioneAPanel, text_A, img_A);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !tutorialA)
         {
             canPlayTutorialSound = false;
             tutorialSound.GetComponent<AudioSource>().clip = buttonS;
@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour{
             DesactivateSlowly(PressioneAPanel, text_A, img_A);
             ActivateSlowly(PreesioneSPanel, text_S, img_S);
         }
-        if (Input.GetKeyDown(KeyCode.S) && tutorialA)
+        if (Input.GetKeyDown(KeyCode.S) && tutorialA && !tutorialS)
         {
             canPlayTutorialSound = false;
             tutorialSound.GetComponent<AudioSource>().clip = buttonD;
@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviour{
             DesactivateSlowly(PreesioneSPanel, text_S, img_S);
             ActivateSlowly(PreesioneDPanel, text_D, img_D);
         }
-        if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS)
+        if (Input.GetKeyDown(KeyCode.D) && tutorialA && tutorialS && !tutorialD)
         {
             tutorialOn = false;
             tutorialD = true;
