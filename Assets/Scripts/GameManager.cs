@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour{
     public float maxTime = 0.1f;
 
     //Obstacles Prefabs
-    public GameObject bus;
+    public GameObject bus   ;
     public GameObject car;
     public GameObject cavalete;
     public GameObject trash;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour{
     private float nextActionTime = 0.0f;
     private float period = 0.25f;
     private float periodBackground = 10f;
-    private float periodObstacle = 12f;
+    private float periodObstacle = 2f;
     //Spawn
     private float x = -22f;
     private float xBackground = 500f;
@@ -183,7 +183,12 @@ public class GameManager : MonoBehaviour{
 
         if (!tutorialOn){
             blindStartEffect.SetActive(false);
-            if (Time.time > nextActionTimeObstacle ) {
+            if(player.transform.position.x < 1)
+            {
+                nextActionTimeObstacle = Time.time;
+            }
+            else if (Time.time > nextActionTimeObstacle ) {
+                periodObstacle = Random.Range(3f, 6f);
                 nextActionTimeObstacle += periodObstacle;
                 SpawnRandomObstacle();
             }
@@ -201,7 +206,6 @@ public class GameManager : MonoBehaviour{
                 ExitGame();
             }
         }
-
         PauseGame();
     }
 
@@ -295,13 +299,17 @@ public class GameManager : MonoBehaviour{
     }
 
     void SetCountText (){
-        score++;
-        countText.text = "Score: " + score.ToString ();
-        countTextFinal.text = "Final Score: " + score.ToString ();
+        if(player.transform.position.x > 1)
+        {
+            score++;
+            countText.text = "Score: " + score.ToString();
+            countTextFinal.text = "Final Score: " + score.ToString();
+        }
+        
 
         //Difficult increase
         //Music Change
-        if(score > 150){
+        if(score > 300){
             if (wichMusic == 0){
                 wichMusic = 1;
                 audioSource.clip = musicMiddle;
@@ -310,7 +318,7 @@ public class GameManager : MonoBehaviour{
                 periodObstacle = 6f;
             }
         }
-        else if(score > 300){
+        else if(score > 600){
             if (wichMusic == 1){
                 wichMusic = 2;
                 audioSource.clip = musicFast;
