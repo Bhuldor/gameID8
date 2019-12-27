@@ -1003,9 +1003,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41bcae8f5c3f0b468441c8c54e68f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.5
+  speed: 5
   BottonLane: -3
-  MoveLaneSpeed: 1
+  MoveLaneSpeed: 0.6
   UpLane: 3
   gameManager: {fileID: 1786091117}
   gameOverSound: {fileID: 8300000, guid: dedc27ee6a3623045a86baa9276bd685, type: 3}
@@ -1019,6 +1019,8 @@ MonoBehaviour:
   score7: {fileID: 8300000, guid: d4265a81a2f1f574b97511b219a32eec, type: 3}
   score8: {fileID: 8300000, guid: e86ddbfcfa6f2314481e773bd501087a, type: 3}
   score9: {fileID: 8300000, guid: bccbffc1b0fb03b4d86230afe985bb77, type: 3}
+  pontuacao: {fileID: 8300000, guid: 5dd9947af345b3849b844ef89f9e22e7, type: 3}
+  recomecar: {fileID: 8300000, guid: 9e5072024c931254cb77ab53faf4c6f8, type: 3}
   mainCamera: {fileID: 963194225}
   destroyPanel: {fileID: 1683409616}
   gameOverPanel: {fileID: 903171746}
@@ -1706,6 +1708,7 @@ GameObject:
   - component: {fileID: 871923494}
   - component: {fileID: 871923496}
   - component: {fileID: 871923495}
+  - component: {fileID: 871923497}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -1771,6 +1774,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871923493}
   m_CullTransparentMesh: 0
+--- !u!82 &871923497
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871923493}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 82d4100d2df5b9b4486eb5273fe84e5c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &886547079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2441,12 +2540,12 @@ PrefabInstance:
     - target: {fileID: 4397904394471809562, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 289
+      value: 299
       objectReference: {fileID: 0}
     - target: {fileID: 4397904394471809562, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.809998
+      value: -64.31
       objectReference: {fileID: 0}
     - target: {fileID: 336084120265082289, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
@@ -2461,12 +2560,12 @@ PrefabInstance:
     - target: {fileID: 336084120265082289, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 289
+      value: 299
       objectReference: {fileID: 0}
     - target: {fileID: 336084120265082289, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -153.53
+      value: -159.03
       objectReference: {fileID: 0}
     - target: {fileID: 4397904393979459828, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
@@ -2481,12 +2580,12 @@ PrefabInstance:
     - target: {fileID: 4397904393979459828, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 289
+      value: 299
       objectReference: {fileID: 0}
     - target: {fileID: 4397904393979459828, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -220
+      value: -225.5
       objectReference: {fileID: 0}
     - target: {fileID: 4397904393963981761, guid: 6d988efc77edbd047bf726aac46cd5bd,
         type: 3}
@@ -2563,11 +2662,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1174586713, guid: 6d988efc77edbd047bf726aac46cd5bd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 289
+      value: 299
       objectReference: {fileID: 0}
     - target: {fileID: 1174586713, guid: 6d988efc77edbd047bf726aac46cd5bd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -286.47
+      value: -291.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 1174586714, guid: 6d988efc77edbd047bf726aac46cd5bd, type: 3}
+      propertyPath: m_Text
+      value: "Pressione W para recome\xE7ar ou D para sair"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d988efc77edbd047bf726aac46cd5bd, type: 3}
@@ -3537,6 +3640,7 @@ MonoBehaviour:
   tutorialS: 0
   tutorialD: 0
   canPlayTutorialSound: 0
+  gameIsPaused: 0
   pausePanel: {fileID: 871923493}
   TutorialPanel: {fileID: 1610305661}
   text_Tutorial: {fileID: 1925437853}

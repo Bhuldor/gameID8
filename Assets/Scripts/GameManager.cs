@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿    using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour{
 
     /*##privateSettings##*/
     //score
-    public float score = 0f;
+    public int score = 0;
     private float nextActionTimeBackground = 0.0f;
     private float nextActionTimeObstacle = 0.0f;
     private float nextActionTime = 0.0f;
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour{
     //pause
 
     private bool startGame = true;
-    private bool gameIsPaused = false;
+    public bool gameIsPaused = false;
     public GameObject pausePanel;
 
     //Tutorial Visual
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour{
         gameOver = false;
         startGame = true;
         StartingTutorial = true;
-        score = 0f;
+        score = 0;
         countText.text = "";
 
         if (!tutorialOn){
@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour{
         {
             Time.timeScale = 0f;
             PlaySound();
-            float pauseEndTime = Time.realtimeSinceStartup + 7.5f;
+            float pauseEndTime = Time.realtimeSinceStartup + 3.5f;
             while (Time.realtimeSinceStartup < pauseEndTime)
             {
                 yield return 0;
@@ -162,43 +162,54 @@ public class GameManager : MonoBehaviour{
     }
 
     void Update () {
-        if (!initialPause){
-            StartCoroutine(WaitToStart()); 
-            initialPause = true;   
-        }
-
-        if (Time.time > nextActionTime ) {
-            nextActionTime += period;
-            if (!tutorialOn){
-                SetCountText ();
-            }
-            SpawnFloors(1);
-        }
-
-
-        if (Time.time > nextActionTimeBackground ) {
-            nextActionTimeBackground += periodBackground;
-            SpawnBackground();
-        }
-
-        if (!tutorialOn){
-            blindStartEffect.SetActive(false);
-            if(player.transform.position.x < 1)
-            {
-                nextActionTimeObstacle = Time.time;
-            }
-            else if (Time.time > nextActionTimeObstacle ) {
-                periodObstacle = Random.Range(3f, 6f);
-                nextActionTimeObstacle += periodObstacle;
-                SpawnRandomObstacle();
-            }
-        }
-        else if (tutorialOn)
+        if (!gameOver)
         {
-            Tutorial();
-        }
 
-        if (gameOver){
+
+            if (!initialPause)
+            {
+                StartCoroutine(WaitToStart());
+                initialPause = true;
+            }
+
+            if (Time.time > nextActionTime)
+            {
+                nextActionTime += period;
+                if (!tutorialOn)
+                {
+                    SetCountText();
+                }
+                SpawnFloors(1);
+            }
+
+
+            if (Time.time > nextActionTimeBackground)
+            {
+                nextActionTimeBackground += periodBackground;
+                SpawnBackground();
+            }
+
+            if (!tutorialOn)
+            {
+                blindStartEffect.SetActive(false);
+                if (player.transform.position.x < 1)
+                {
+                    nextActionTimeObstacle = Time.time;
+                }
+                else if (Time.time > nextActionTimeObstacle)
+                {
+                    periodObstacle = Random.Range(3f, 6f);
+                    nextActionTimeObstacle += periodObstacle;
+                    SpawnRandomObstacle();
+                }
+            }
+            else if (tutorialOn)
+            {
+                Tutorial();
+            }
+        }
+        else
+        {
             if (Input.GetKeyDown(KeyCode.W)){
                 RestartGame();
             }
@@ -468,6 +479,7 @@ public class GameManager : MonoBehaviour{
             gameIsPaused = true;
             pausePanel.SetActive(true);
             Time.timeScale = 0f;
+            audioSource.Pause();
         }
         else if(Input.GetKeyDown(KeyCode.Escape) && gameIsPaused)
         {
@@ -484,5 +496,6 @@ public class GameManager : MonoBehaviour{
         gameIsPaused = false;
         pausePanel.SetActive(false);
         Time.timeScale = 1;
+        audioSource.UnPause();
     }
 }

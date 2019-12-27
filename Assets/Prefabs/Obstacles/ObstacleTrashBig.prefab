@@ -313,6 +313,7 @@ MonoBehaviour:
   perigoAoLado: {fileID: 8300000, guid: 80f767022a17f754db3ba540ce710814, type: 3}
   perigoAFrente: {fileID: 8300000, guid: 77541ae6c832e67489ffd2d3aaa17ec4, type: 3}
   player: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1001 &4106145748726190246
 PrefabInstance:
   m_ObjectHideFlags: 0

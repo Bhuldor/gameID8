@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour{
     
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour{
     public AudioClip score7;
     public AudioClip score8;
     public AudioClip score9;
+    public AudioClip pontuacao;
+    public AudioClip recomecar;
 
     [Header("General")]
     public GameObject mainCamera;
@@ -52,7 +55,6 @@ public class PlayerController : MonoBehaviour{
     private float originalSpeed;
 
     private BlindFloorSpawnManager bfSpawnManager;
-
     //private GameManager gameManager;
     
     private AudioSource source {get {return GetComponent<AudioSource>();}}
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour{
     }
 	
 	void Update(){
+        if (!gameManager.gameOver)
+        {
         KeyPress();
         //move lateral 
         Move();
@@ -79,7 +83,16 @@ public class PlayerController : MonoBehaviour{
             }
             slowed = false;
         }
-	}
+            if (gameManager.gameIsPaused)
+            {
+                source.Pause();
+            }
+            else
+            {
+                source.UnPause();
+            }
+        }
+    }
 
     public void ExitGame(){
 		Application.Quit();
@@ -207,10 +220,10 @@ public class PlayerController : MonoBehaviour{
         //Game Over
         gameManager.GetComponent<AudioSource>().Stop();
         transform.GetComponent<AudioSource>().Stop();
-        StartCoroutine(PlayGameOverSounds());
-
+        //StartCoroutine(PlayGameOverSounds());
+        StartCoroutine(ScoreToSound());
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         gameManager.gameOver = true;
     }
 
@@ -233,6 +246,74 @@ public class PlayerController : MonoBehaviour{
         blindHalfEffect.SetActive(true);
         yield return new WaitForSeconds(delayForGettingDark);
         blindFullEffect.SetActive(true);
+    }
+
+    private IEnumerator ScoreToSound()
+    {
+        source.volume = 1;
+        source.priority = 256;
+        int[] score_un = GetIntArray(gameManager.score);
+        source.clip = pontuacao;
+        source.Play();
+        yield return new WaitForSeconds(1f);
+        foreach (int a in score_un) { 
+            yield return new WaitForSeconds(1.5f);
+            playScore(a);   
+        }
+        yield return new WaitForSeconds(1.5f);
+        source.clip = recomecar;
+        source.Play();
+        yield return new WaitForSeconds(6f);
+        source.Stop();
+    }
+
+    private int[] GetIntArray(int num)
+    {
+        List<int> list = new List<int>();
+        while(num > 0)
+        {
+            list.Add(num % 10);
+            num = num / 10;
+        }
+        list.Reverse();
+        return list.ToArray();
+    }
+    private void playScore(int score)
+    {
+        AudioClip playclip = score0;
+        switch (score)
+        {
+            case 1:
+                playclip = score1;
+                break;
+            case 2:
+                playclip = score2;
+                break;
+            case 3:
+                playclip = score3;
+                break;
+            case 4:
+                playclip = score4;
+                break;
+            case 5:
+                playclip = score5;
+                break;
+            case 6:
+                playclip = score6;
+                break;
+            case 7:
+                playclip = score7;
+                break;
+            case 8:
+                playclip = score8;
+                break;
+            case 9:
+                playclip = score9;
+                break;
+        }
+        source.clip = playclip;
+        source.loop = false;
+        source.Play();
     }
 
     void KeyPress()
