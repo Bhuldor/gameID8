@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip perigoAoLado;
     public AudioClip perigoAFrente;
     public GameObject player;
+    public GameManager gameManager;
     
     private AudioSource audioSource;
     private bool starting = true;
@@ -15,15 +16,28 @@ public class SoundManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         player = GameObject.Find("Player");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         StartCoroutine(Wait());
+    }
+    private void Update()
+    {
+        if (gameManager.gameIsPaused)
+        {
+            audioSource.Pause();
+        }
+        else
+        {
+            audioSource.UnPause();
+        }
     }
 
     private IEnumerator Wait()
     {
         while (starting)
         {
-            yield return new WaitForSeconds(6f);
-            goSound();
+            yield return new WaitForSeconds(4f);
+            if (!gameManager.gameOver)
+                goSound();
         }
     }
 
